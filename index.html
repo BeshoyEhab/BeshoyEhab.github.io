@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bishoy Ehab — signal chain</title>
   <meta name="description" content="Bishoy Ehab — agentic AI systems, developer tools, and game development.">
+  <link rel="icon" type="image/png" href="Bishoy_Logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -96,6 +97,16 @@
       position: relative;
       z-index: 1;
       border-bottom: 1px solid var(--line);
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      margin-bottom: 24px;
+      object-fit: cover;
+      display: block;
     }
 
     .boot {
@@ -460,7 +471,8 @@
       <div class="boot" id="boot"></div>
       <h1>Bishoy <span>Ehab</span></h1>
       <p class="role">CS student at FCIS Ain Shams (Scientific Computing) building <b>agentic AI systems</b> and
-        <b>developer tools</b> — with a parallel track in solo game development.</p>
+        <b>developer tools</b> — with a parallel track in solo game development.
+      </p>
       <div class="hero-links">
         <a class="btn primary" href="#projects">view projects</a>
         <a class="btn" href="https://github.com/BeshoyEhab" target="_blank" rel="noopener">github ↗</a>
@@ -599,25 +611,56 @@
         these.</p>
       <div class="contact-row">
         <a href="https://github.com/BeshoyEhab" target="_blank" rel="noopener">github.com/BeshoyEhab ↗</a>
-        <span>@bishoy-dev</span>
-        <span>mostaql</span>
+        <a href="mailto:beshoyehabhhmm@gmail.com">beshoyehabhhmm@gmail.com</a>
+        <a href="tel:+201277083239">+20 127 708 3239</a>
+        <a href="https://www.youtube.com/@bishoy-dev">@bishoy-dev</a>
       </div>
       <div class="fine">// built from source, deployed on push · signal chain never idle</div>
     </footer>
   </div>
 
   <script>
-    const bootText = "$ whoami" + "\n" + "> bishoy_ehab — status: active";
+    const statusLines = [
+      "$ whoami\n> bishoy_ehab — status: active",
+      "$ ps --focus\n> building agentic AI systems",
+      "$ tail -f youtube.log\n> recording ep.1 for Bishoy Dev",
+      "$ pip show dot-man\n> shipped to PyPI",
+      "$ godot --status\n> developing Deprecated",
+      "$ cat /etc/os-release\n> CS student — FCIS Ain Shams",
+      "$ uname -a\n> Arch Linux · Hyprland · Fish"
+    ];
     const el = document.getElementById('boot');
-    let i = 0;
-    function type() {
-      if (i <= bootText.length) {
-        el.innerHTML = bootText.slice(0, i).replace('\n', '<br>') + '<span class="cursor"></span>';
-        i++;
-        setTimeout(type, 22);
+    let lineIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    function tick() {
+      const full = statusLines[lineIndex];
+      if (!deleting) {
+        charIndex++;
+        if (charIndex > full.length) {
+          deleting = true;
+          setTimeout(tick, 1800);
+          renderBoot(full);
+          return;
+        }
+      } else {
+        charIndex--;
+        if (charIndex < 0) {
+          deleting = false;
+          lineIndex = (lineIndex + 1) % statusLines.length;
+          charIndex = 0;
+        }
       }
+      renderBoot(full.slice(0, charIndex));
+      setTimeout(tick, deleting ? 12 : 22);
     }
-    type();
+
+    function renderBoot(text) {
+      el.innerHTML = text.replace('\n', '<br>') + '<span class="cursor"></span>';
+    }
+
+    tick();
   </script>
 
 </body>
