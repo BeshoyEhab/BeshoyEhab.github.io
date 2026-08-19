@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bishoy Ehab — signal chain</title>
+  <meta name="description" content="Bishoy Ehab — agentic AI systems, developer tools, and game development.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0e0f;
+      --panel: #12171a;
+      --panel-2: #171e21;
+      --line: #232b2e;
+      --text: #e7ecec;
+      --muted: #7c8a8c;
+      --signal: #5ee6c5;
+      --signal-dim: #2c4d47;
+      --amber: #e8a23d;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(94, 230, 197, 0.05) 1px, transparent 0);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+    }
+
+    /* signal rail */
+    .rail {
+      position: fixed;
+      left: calc(50% - 460px);
+      top: 0;
+      bottom: 0;
+      width: 24px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .rail-line {
+      width: 1px;
+      height: 100%;
+      background: var(--line);
+    }
+
+    @media (max-width: 980px) {
+      .rail {
+        display: none;
+      }
+    }
+
+    header.hero {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .boot {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--signal);
+      margin-bottom: 28px;
+      letter-spacing: 0.02em;
+      min-height: 20px;
+    }
+
+    .boot .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: var(--signal);
+      margin-left: 2px;
+      animation: blink 1s steps(1) infinite;
+      vertical-align: -2px;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    h1 {
+      font-family: var(--mono);
+      font-weight: 800;
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    h1 span {
+      color: var(--signal);
+    }
+
+    .role {
+      font-family: var(--mono);
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      color: var(--muted);
+      margin-top: 18px;
+      max-width: 640px;
+    }
+
+    .role b {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .hero-links {
+      margin-top: 36px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 10px 18px;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      text-decoration: none;
+      transition: .15s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn.primary {
+      background: var(--signal);
+      color: #08110f;
+      border-color: var(--signal);
+      font-weight: 700;
+    }
+
+    .btn.primary:hover {
+      background: #7ff0d4;
+    }
+
+    .btn:not(.primary):hover {
+      border-color: var(--signal);
+      color: var(--signal);
+    }
+
+    section {
+      padding: 80px 0;
+      position: relative;
+      z-index: 1;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--signal);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      letter-spacing: 0.08em;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--signal);
+      box-shadow: 0 0 8px var(--signal);
+    }
+
+    h2 {
+      font-family: var(--mono);
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+
+    p.lead {
+      color: var(--muted);
+      max-width: 640px;
+      font-size: 1.02rem;
+    }
+
+    /* about */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 48px;
+      margin-top: 36px;
+    }
+
+    @media (max-width:760px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .facts {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .facts b {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* skills as a signal chain: input -> modifier -> output */
+    .chain {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 36px;
+    }
+
+    @media (max-width:760px) {
+      .chain {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .node {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      padding: 22px;
+      position: relative;
+    }
+
+    .node::before {
+      content: attr(data-label);
+      position: absolute;
+      top: -11px;
+      left: 16px;
+      background: var(--bg);
+      padding: 0 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--signal);
+      letter-spacing: 0.08em;
+    }
+
+    .node ul {
+      list-style: none;
+      margin-top: 4px;
+    }
+
+    .node li {
+      font-size: 14px;
+      color: var(--muted);
+      padding: 5px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+
+    .node li:last-child {
+      border-bottom: none;
+    }
+
+    .node li b {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* projects */
+    .proj {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 24px;
+      padding: 26px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .proj:last-child {
+      border-bottom: none;
+    }
+
+    @media (max-width:640px) {
+      .proj {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
+
+    .status {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      height: fit-content;
+    }
+
+    .status.active {
+      color: var(--signal);
+    }
+
+    .status.shipped {
+      color: var(--amber);
+    }
+
+    .status.dev {
+      color: var(--muted);
+    }
+
+    .proj h3 {
+      font-family: var(--mono);
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .proj h3 a {
+      text-decoration: none;
+      border-bottom: 1px solid var(--signal-dim);
+      transition: .15s;
+    }
+
+    .proj h3 a:hover {
+      border-color: var(--signal);
+      color: var(--signal);
+    }
+
+    .proj p {
+      color: var(--muted);
+      font-size: 14.5px;
+      max-width: 640px;
+    }
+
+    .tags {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      padding: 3px 8px;
+      border-radius: 20px;
+    }
+
+    /* now */
+    .now-list {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .now-item {
+      display: flex;
+      gap: 16px;
+      align-items: baseline;
+      font-family: var(--mono);
+      font-size: 14px;
+    }
+
+    .now-item .tick {
+      color: var(--signal);
+    }
+
+    .now-item span.desc {
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 14.5px;
+    }
+
+    footer {
+      padding: 60px 0 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-row {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      font-family: var(--mono);
+      font-size: 14px;
+    }
+
+    .contact-row a {
+      text-decoration: none;
+      border-bottom: 1px solid var(--signal-dim);
+      padding-bottom: 2px;
+    }
+
+    .contact-row a:hover {
+      color: var(--signal);
+      border-color: var(--signal);
+    }
+
+    .fine {
+      margin-top: 50px;
+      color: var(--muted);
+      font-size: 12px;
+      font-family: var(--mono);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="rail">
+    <div class="rail-line"></div>
+  </div>
+
+  <div class="wrap">
+    <header class="hero">
+      <div class="boot" id="boot"></div>
+      <h1>Bishoy <span>Ehab</span></h1>
+      <p class="role">CS student at FCIS Ain Shams (Scientific Computing) building <b>agentic AI systems</b> and
+        <b>developer tools</b> — with a parallel track in solo game development.</p>
+      <div class="hero-links">
+        <a class="btn primary" href="#projects">view projects</a>
+        <a class="btn" href="https://github.com/BeshoyEhab" target="_blank" rel="noopener">github ↗</a>
+        <a class="btn" href="#contact">contact</a>
+      </div>
+    </header>
+
+    <section id="about">
+      <div class="eyebrow">01 — INPUT</div>
+      <h2>about</h2>
+      <div class="about-grid">
+        <p class="lead">Fourth-year Computer Science student, Cairo. Most of my time goes into systems that sit between
+          a language model and something real — retrieval, memory, tool use — and into a roguelite built alone in Godot
+          on the side. I'd rather ship something small than plan something large.</p>
+        <div class="facts">
+          <div><b>Base:</b> Cairo, Egypt</div>
+          <div><b>Track:</b> Scientific Computing, FCIS ASU</div>
+          <div><b>Focus:</b> Agentic AI · RAG · Dev Tools</div>
+          <div><b>OS:</b> Arch Linux · Hyprland · Fish</div>
+          <div><b>Language:</b> Python, first and mostly</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack">
+      <div class="eyebrow">02 — MODIFIER</div>
+      <h2>signal chain / stack</h2>
+      <p class="lead">The way I think about tools: raw input, something that shapes it, and what comes out the other
+        end.</p>
+      <div class="chain">
+        <div class="node" data-label="input">
+          <ul>
+            <li><b>Python</b> — primary language</li>
+            <li><b>GDScript</b> — Godot 4</li>
+            <li>SQL · SQLite/Postgres</li>
+            <li>Bash / Fish</li>
+          </ul>
+        </div>
+        <div class="node" data-label="modifier">
+          <ul>
+            <li><b>LangGraph</b> — agent orchestration</li>
+            <li>FastAPI · MCP servers</li>
+            <li>Hybrid retrieval (BM25 + embeddings)</li>
+            <li>Groq · Gemini · Cerebras · OpenRouter</li>
+          </ul>
+        </div>
+        <div class="node" data-label="output">
+          <ul>
+            <li>RAG chatbots &amp; assistants</li>
+            <li>CLI tools &amp; PyPI packages</li>
+            <li>Godot prototypes</li>
+            <li>Neovim / Hyprland configs</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="eyebrow">03 — OUTPUT</div>
+      <h2>projects</h2>
+
+      <div class="proj">
+        <div class="status active">ACTIVE</div>
+        <div>
+          <h3>hebbian-poc</h3>
+          <p>A Hebbian knowledge graph where edges traversed during spreading activation get their weights updated —
+            plasticity happens at query time, not just at indexing time. ReAct loop, fact-checking, hybrid retrieval,
+            dream-consolidation, FastAPI + MCP server, React/Vite frontend. ~13K lines and still growing.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span
+              class="tag">MCP</span><span class="tag">Knowledge Graphs</span></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="status shipped">SHIPPED</div>
+        <div>
+          <h3><a href="https://pypi.org/project/dotman-git/" target="_blank" rel="noopener">dot-man ↗</a></h3>
+          <p>A git-powered dotfile manager that treats each machine profile as a branch. Published to PyPI. Small, does
+            one thing, and I actually use it daily.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">CLI</span><span class="tag">PyPI</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="status dev">IN DEV</div>
+        <div>
+          <h3>Deprecated</h3>
+          <p>A solo roguelite in Godot 4. You play ECHO-7, routing power through a circuit signal chain — input,
+            modifier, output — while managing heat across five sectors and an adaptive nemesis, ECHO-8, that carries
+            scars across runs.</p>
+          <div class="tags"><span class="tag">Godot 4</span><span class="tag">GDScript</span><span class="tag">Game
+              Design</span></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="status dev">PROTOTYPE</div>
+        <div>
+          <h3>Off the Balls</h3>
+          <p>A slingshot/ball-launcher physics prototype — the excuse to get RigidBody2D, squash-and-stretch animation,
+            and a time-scale-aware trail system actually feeling right.</p>
+          <div class="tags"><span class="tag">Godot</span><span class="tag">Physics</span></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="status shipped">EARLY WORK</div>
+        <div>
+          <h3>AIRoadmapPlanner</h3>
+          <p>A learning-roadmap generator — React + Vite frontend, Gemini for planning. One of the first things I
+            shipped end to end.</p>
+          <div class="tags"><span class="tag">React</span><span class="tag">Vite</span><span class="tag">Gemini</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="now">
+      <div class="eyebrow">04 — LOG</div>
+      <h2>currently</h2>
+      <div class="now-list">
+        <div class="now-item"><span class="tick">›</span><span>Building</span><span class="desc">— toward a graduation
+            project pulling in the hebbian-poc knowledge-graph work</span></div>
+        <div class="now-item"><span class="tick">›</span><span>Recording</span><span class="desc">— first episodes for
+            the "Bishoy Dev" YouTube channel, screen + voice, Python → Agentic AI series</span></div>
+        <div class="now-item"><span class="tick">›</span><span>Freelancing</span><span class="desc">— AI Q&amp;A / RAG
+            chatbot builds for small businesses, via Mostaql</span></div>
+      </div>
+    </section>
+
+    <footer id="contact">
+      <div class="eyebrow">05 — TERMINAL</div>
+      <h2>get in touch</h2>
+      <p class="lead">Open to conversations about agentic systems, dev tools, or game dev. Reach out through any of
+        these.</p>
+      <div class="contact-row">
+        <a href="https://github.com/BeshoyEhab" target="_blank" rel="noopener">github.com/BeshoyEhab ↗</a>
+        <a href="https://www.youtube.com/@bishoy-dev" target="_blank" rel="noopener">@bishoy-dev ↗</a>
+        <a href="https://mostaql.com" target="_blank" rel="noopener">mostaql ↗</a>
+      </div>
+      <div class="fine">// built from source, deployed on push · signal chain never idle</div>
+    </footer>
+  </div>
+
+  <script>
+    const bootText = "$ whoami" + "\n" + "> bishoy_ehab — status: active";
+    const el = document.getElementById('boot');
+    let i = 0;
+    function type() {
+      if (i <= bootText.length) {
+        el.innerHTML = bootText.slice(0, i).replace('\n', '<br>') + '<span class="cursor"></span>';
+        i++;
+        setTimeout(type, 22);
+      }
+    }
+    type();
+  </script>
+
+</body>
+
+</html>
