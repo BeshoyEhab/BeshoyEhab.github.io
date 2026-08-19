@@ -66,28 +66,6 @@
       position: relative;
     }
 
-    /* signal rail */
-    .rail {
-      position: fixed;
-      left: calc(50% - 460px);
-      top: 0;
-      bottom: 0;
-      width: 24px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .rail-line {
-      width: 1px;
-      height: 100%;
-      background: var(--line);
-    }
-
-    @media (max-width: 980px) {
-      .rail {
-        display: none;
-      }
-    }
 
     header.hero {
       min-height: 92vh;
@@ -462,9 +440,6 @@
 
 <body>
 
-  <div class="rail">
-    <div class="rail-line"></div>
-  </div>
 
   <div class="wrap">
     <header class="hero">
@@ -490,10 +465,11 @@
           on the side. I'd rather ship something small than plan something large.</p>
         <div class="facts">
           <div><b>Base:</b> Cairo, Egypt</div>
-          <div><b>Track:</b> Scientific Computing, FCIS ASU</div>
+          <div><b>Education:</b> BSc Computer Science (in progress), Faculty of Computers &amp; Information Sciences,
+            Ain Shams University — Scientific Computing track</div>
           <div><b>Focus:</b> Agentic AI · RAG · Dev Tools</div>
           <div><b>OS:</b> Arch Linux · Hyprland · Fish</div>
-          <div><b>Language:</b> Python, first and mostly</div>
+          <div><b>Primary language:</b> Python</div>
         </div>
       </div>
     </section>
@@ -529,6 +505,10 @@
           </ul>
         </div>
       </div>
+      <p style="margin-top:28px; font-family:var(--mono); font-size:12.5px; color:var(--muted); line-height:1.9;">
+        <b style="color:var(--text);">Skills:</b> Python · GDScript · SQL · FastAPI · LangGraph · MCP · RAG (BM25 +
+        embeddings) · Git · Linux/Bash · React/Vite · SQLite/PostgreSQL
+      </p>
     </section>
 
     <section id="projects">
@@ -542,12 +522,9 @@
           <h3>hebbian-poc <span class="tag" style="border-color:var(--signal-dim); color:var(--signal);">private
               repo</span></h3>
           <p>A Hebbian knowledge graph where edges traversed during spreading activation get their weights updated —
-            plasticity happens at query time, not at indexing time. ReAct loop, fact-checking, hybrid retrieval,
-            dream-consolidation, FastAPI + MCP server. ~13K lines.</p>
-          <p style="margin-top:8px; color:var(--muted); font-size:13.5px;"><b style="color:var(--signal);">why:</b> most
-            RAG systems only update weights when you re-index. I wanted to test whether a graph could get smarter about
-            which paths matter just from being queried — closer to how biological memory reinforces used connections.
-          </p>
+            plasticity happens at query time, not at indexing time. Most RAG systems only update on re-index; this tests
+            whether a graph can reinforce the paths it actually uses, closer to how biological memory works. ReAct loop,
+            fact-checking, hybrid retrieval, dream-consolidation, FastAPI + MCP server. ~13K lines.</p>
           <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span
               class="tag">MCP</span><span class="tag">Knowledge Graphs</span></div>
         </div>
@@ -558,56 +535,22 @@
         <div>
           <h3><a href="https://github.com/BeshoyEhab/dot-man" target="_blank" rel="noopener">dot-man ↗</a> <span
               class="tag">PyPI: dotman-git</span></h3>
-          <p>A git-powered dotfile manager that treats each machine profile as a branch. Published to PyPI, and I use it
-            daily on my own Arch + Hyprland setup.</p>
-          <p style="margin-top:8px; color:var(--muted); font-size:13.5px;"><b style="color:var(--signal);">why:</b> I
-            kept breaking my own configs testing new Hyprland/Neovim setups. Branch-per-profile meant I could try
-            something risky and switch back to a known-good state in one command.</p>
+          <p>A git-powered dotfile manager that treats each machine profile as a branch. Built after breaking my own
+            configs too many times testing new Hyprland and Neovim setups — branch-per-profile means I can try something
+            risky and switch back to a known-good state in one command. Published to PyPI, and I use it daily.</p>
           <div class="tags"><span class="tag">Python</span><span class="tag">CLI</span><span class="tag">PyPI</span>
           </div>
         </div>
       </div>
 
       <div class="proj">
-        <div class="status active">FREELANCE DEMO</div>
-        <div>
-          <h3>TechNest RAG Widget <span class="tag" style="border-color:var(--amber); color:var(--amber);">Mostaql
-              portfolio</span></h3>
-          <p>An embeddable AI Q&amp;A chatbot widget built on hybrid BM25 + sentence-transformer retrieval, served
-            through Groq — the closest showcase of the service I actually offer freelance clients.</p>
-          <p style="margin-top:8px; color:var(--muted); font-size:13.5px;"><b style="color:var(--signal);">why:</b>
-            built as a concrete, testable demo before pitching AI Q&amp;A / RAG chatbot builds to small businesses on
-            Mostaql — so clients see working retrieval, not just a claim.</p>
-          <div class="tags"><span class="tag">Python</span><span class="tag">RAG</span><span
-              class="tag">BM25</span><span class="tag">Groq</span></div>
-        </div>
-      </div>
-
-      <div class="proj">
-        <div class="status dev">IN DEV</div>
-        <div>
-          <h3>Deprecated</h3>
-          <p>A solo roguelite in Godot 4. You play ECHO-7, routing power through a circuit signal chain — input,
-            modifier, output — while managing heat across five sectors and an adaptive nemesis, ECHO-8, that carries
-            scars across runs.</p>
-          <p style="margin-top:8px; color:var(--muted); font-size:13.5px;"><b style="color:var(--signal);">why:</b>
-            wanted a mechanic where the systems engineering I do all day — signal chains, state, modifiers — became the
-            actual gameplay, not just the tech behind it.</p>
-          <div class="tags"><span class="tag">Godot 4</span><span class="tag">GDScript</span><span class="tag">Game
-              Design</span></div>
-        </div>
-      </div>
-
-      <div class="proj">
-        <div class="status shipped">EARLY WORK</div>
+        <div class="status shipped">SHIPPED</div>
         <div>
           <h3><a href="https://github.com/BeshoyEhab/AIRoadmapPlanner" target="_blank" rel="noopener">AIRoadmapPlanner
               ↗</a></h3>
-          <p>A learning-roadmap generator — React + Vite frontend, Gemini for planning. One of the first things I
-            shipped end to end.</p>
-          <p style="margin-top:8px; color:var(--muted); font-size:13.5px;"><b style="color:var(--signal);">why:</b> I
-            was building my own study roadmaps by hand and figured the process itself — break a skill into ordered steps
-            — was something a model could help scaffold.</p>
+          <p>A learning-roadmap generator — React + Vite frontend, Gemini for planning. Grew out of building my own
+            study roadmaps by hand and realizing that breaking a skill into ordered steps was something a model could
+            help scaffold. One of the first things I shipped end to end.</p>
           <div class="tags"><span class="tag">React</span><span class="tag">Vite</span><span class="tag">Gemini</span>
           </div>
         </div>
@@ -650,7 +593,7 @@
       "$ ps --focus\n> building agentic AI systems",
       "$ tail -f youtube.log\n> recording ep.1 for Bishoy Dev",
       "$ pip show dot-man\n> shipped to PyPI",
-      "$ godot --status\n> developing Deprecated",
+      "$ godot --status\n> prototyping in Godot 4",
       "$ cat /etc/os-release\n> CS student — FCIS Ain Shams",
       "$ uname -a\n> Arch Linux · Hyprland · Fish"
     ];
